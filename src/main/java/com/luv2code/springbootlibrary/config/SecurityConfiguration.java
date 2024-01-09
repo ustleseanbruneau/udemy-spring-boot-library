@@ -18,19 +18,29 @@ public class SecurityConfiguration {
 
         // Disable Cross Site Request Forgery
         //http.csrf().disable();
+        // add cors filter
+        //http.cors();
+
         http.csrf(AbstractHttpConfigurer::disable);
 
         // Protect endpoints at /api/<type>/secure
         http.authorizeHttpRequests(configurer ->
-                configurer.requestMatchers("/api/books/secure/**", "/api/reviews/secure/**")
+                configurer.requestMatchers(
+                        "/api/books/secure/**",
+                                "/api/reviews/secure/**",
+                                "/api/messages/secure/**")
                         .authenticated()
-                        .requestMatchers("/api/books/**", "/api/reviews/**")
+                        .requestMatchers(
+                                "/api/books/**",
+                                        "/api/reviews/**",
+                                        "/api/messages/**")
                         .permitAll())
                 .oauth2ResourceServer((oath2) -> oath2.jwt(Customizer.withDefaults())
                 );
 
         // add cors filter
         http.cors(Customizer.withDefaults());
+
         // add content negotation strategy
         http.setSharedObject(ContentNegotiationStrategy.class, new HeaderContentNegotiationStrategy());
 
