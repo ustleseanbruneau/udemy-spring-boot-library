@@ -28,12 +28,14 @@ public class SecurityConfiguration {
                 configurer.requestMatchers(
                         "/api/books/secure/**",
                                 "/api/reviews/secure/**",
-                                "/api/messages/secure/**")
+                                "/api/messages/secure/**",
+                                "/api/admin/secure/**")
                         .authenticated()
                         .requestMatchers(
                                 "/api/books/**",
                                         "/api/reviews/**",
-                                        "/api/messages/**")
+                                        "/api/messages/**",
+                                        "/api/admin/**")
                         .permitAll())
                 .oauth2ResourceServer((oath2) -> oath2.jwt(Customizer.withDefaults())
                 );
